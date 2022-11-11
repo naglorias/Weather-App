@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load Leaflet from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- Load geocoding plugin after Leaflet -->
+    <link rel="stylesheet"
+        href="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.css">
+    <script
+        src="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.js"></script>
+    <link rel="shortcut icon" href="imgs/weather-favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Weather App</title>
+</head>
+
+<body>
+    <div class="main-content">
+        <div class="location-bar">
+            <div id="location-inpt">
+                <div class="container">
+                    <!-- For the invisible map -->
+                    <div id="map"></div>
+                    <!-- For the search box -->
+                    <div id="search-box"></div>
+                    <!-- To display the result -->
+                    <!-- <div id="result"></div> -->
+                </div>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="weather-flex">
+                <div class="current-column">
+                    <div class="weather-grid">
+                        <div class="weather-cell cell1">
+                            <div class="flex">
+                                <div class="temp-details">20 &#8451;, Gentle Breeze</div>
+                                <div class="temp-icon"><img src="./imgs/rain.png" alt=""></div>
+                                <div class="location">Eg,Alexandria Governorate</div>
+                                <div class="timezone">Africa/Cairo Timezone</div>
+                            </div>
+                        </div>
+                        <div class="weather-cell cell2">
+                            <div class="flex">
+                                <div class="block blc1">
+                                    <div class="title"> Feels like</div>
+                                    <div class="content">21 &#8451;</div>
+                                </div>
+                                <div class="block blc2">
+                                    <div class="title">Humidity</div>
+                                    <div class="content">77 %</div>
+                                </div>
+                                <div class="block blc3">
+                                    <div class="title">Description</div>
+                                    <div class="content">Raining</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-cell cell3">
+                            <div class="flex">
+                                <div class="block blc4">
+                                    <div class="title">Wind</div>
+                                    <div class="content">11m/s,NNW</span>
+                                    </div>
+                                </div>
+                                <div class="block blc5">
+                                    <div class="title">Pressure</div>
+                                    <div class="content">1020hPa</div>
+                                </div>
+                                <div class="block blc6">
+                                    <div class="title">Clearness</div>
+                                    <div class="content">Clear</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-cell cell4">
+                            <div class="flex">
+                                <div class="block blc7">
+                                    <div class="title">Clouds</div>
+                                    <div class="content">3</div>
+                                </div>
+                                <div class="block blc8">
+                                    <div class="title">Max</div>
+                                    <div class="content">19&#8451;</div>
+                                </div>
+                                <div class="block blc9">
+                                    <div class="title">Min</div>
+                                    <div class="content">12&#8451;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-cell cell5">
+                            <div class="flex">
+                                <div class="block blc10">
+                                    <div class="title">Uv index</div>
+                                    <div class="content">12</div>
+                                </div>
+                                <div class="block blc11">
+                                    <div class="title">Dew Point</div>
+                                    <div class="content">33</div>
+                                </div>
+                                <div class="block blc12">
+                                    <div class="title">Visibilty</div>
+                                    <div class="content">10km</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-cell cell6">
+                            <div class="flex">
+                                <div class="block blc13">
+                                    <div class="title">Sunrise<span class="rise-icon"><img src="./imgs/sunrise.png"
+                                                alt=""></span>
+                                    </div>
+                                    <div class="content">05:50Am</div>
+                                </div>
+                                <div class="block blc14">
+                                    <div class="title">Sunset<span class="set-icon"><img src="./imgs/sunset.png"
+                                                alt=""></span>
+                                    </div>
+                                    <div class="content">18:30 Pm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weekly-column">
+                    <div class="daily-weather-flex">
+                        <!-- Day one -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day1">
+                                        Today
+                                    </div>
+                                    <div id="date1">
+                                    </div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-1"></div>
+                                    <div id="temp-max1">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min1">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-1">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day two -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day2"></div>
+                                    <div id="date2"></div>
+                                </div>
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-2"></div>
+                                    <div id="temp-max2">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min2">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-2">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day three -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day3"></div>
+                                    <div id="date3"></div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-3"></div>
+                                    <div id="temp-max3">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min3">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-3">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day four -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day4"></div>
+                                    <div id="date4"></div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-4"></div>
+                                    <div id="temp-max4">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min4">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-4">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day five -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day5"></div>
+                                    <div id="date5"></div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-5"></div>
+                                    <div id="temp-max5">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min5">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-5">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day six -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day6"></div>
+                                    <div id="date6"></div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-6"></div>
+                                    <div id="temp-max6">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min6">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-6">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day seven -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day7"></div>
+                                    <div id="date7"></div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-7"></div>
+                                    <div id="temp-max7">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min7">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-7">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Day eight -->
+                        <div class="day">
+                            <div class="daily-forecast">
+                                <div class="day-date">
+                                    <div id="day8"></div>
+                                    <div id="date8"></div>
+                                </div>
+
+                                <div class="day-temp">
+                                    <div class="icon"><img src="" id="image-8"></div>
+                                    <div id="temp-max8">
+                                        <div class="temp-title">Max</div>
+                                        <div class="max-content"></div>
+                                    </div>
+                                    <div id="temp-min8">
+                                        <div class="temp-title">Min</div>
+                                        <div class="min-content"></div>
+                                    </div>
+                                    <div id="humidity-8">
+                                        <div class="temp-title">Humidity</div>
+                                        <div class="humidity-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
