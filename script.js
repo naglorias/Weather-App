@@ -188,7 +188,7 @@ searchBoxControl.appendChild(geocoderControl.getContainer());
 /* Calling weather api function and insert every data into its suitable place */
 
 async function displayLatLon(display_name, lat, lng) {
-    const apiKey = "7264687911839b8b751976441e14973a";
+    const apiKey = "YOUR API KEY";//OpenWeatherMap API
     Promise.all([
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`),
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${display_name}&lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`)
